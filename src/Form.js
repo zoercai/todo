@@ -1,6 +1,6 @@
 import React from "react";
-import ReactDOM from "react-dom";
 import { List } from "./List";
+import { MyFancyComponent } from "./Map";
 import { observer } from "mobx-react";
 import { Button } from 'semantic-ui-react';
 
@@ -40,6 +40,8 @@ export class Form extends React.Component {
           <Button onClick={this.onClick} className="positive ui button"> Add </Button> 
         </div>
         
+        <MyFancyComponent />
+
         <List ref="list" sendCount={this.getCount} />
 
         <div className="ui horizontal statistic" id="counter">
