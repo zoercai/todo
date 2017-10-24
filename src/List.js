@@ -1,6 +1,7 @@
 import React from "react";
 import { observable, computed } from "mobx";
 import { observer } from "mobx-react";
+import { MapWithAMarkerClusterer } from "./Map";
 
 @observer
 export class List extends React.Component {
@@ -110,8 +111,19 @@ export class List extends React.Component {
         );
 
       return (
-        <div className="ui huge celled list">
-        {items}
+        <div>
+          <MapWithAMarkerClusterer
+            markers={this.todos}
+            currentLat={this.state.lat}
+            currentLong={this.state.long} 
+            googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places"
+            loadingElement={<div style={{ height: `100%` }} />}
+            containerElement={<div style={{ height: `400px` }} />}
+            mapElement={<div style={{ height: `100%` }} />}
+          />
+          <div className="ui huge celled list">
+          {items}
+          </div>
         </div>
         );
       }
