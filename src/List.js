@@ -23,8 +23,8 @@ export class List extends React.Component {
       this.state = {
         current: "",
         count: 0,
-        lat: null,
-        long: null
+        lat: 0,
+        long: 0
       };
       this.onPositionSuccess = this.onPositionSuccess.bind(this);
       this.onPositionError = this.onPositionError.bind(this);
