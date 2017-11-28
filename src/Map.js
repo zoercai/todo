@@ -1,7 +1,7 @@
 import React from "react";
 import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps";
 
-export const MapWithAMarkerClusterer = withScriptjs(withGoogleMap((props) =>
+export const MapWithMarkers = withScriptjs(withGoogleMap((props) =>
   <GoogleMap
     defaultZoom={17}
     defaultCenter={{ lat: parseFloat(props.currentLat), lng: parseFloat(props.currentLong) }}
