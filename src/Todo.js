@@ -36,7 +36,6 @@ export class Todo extends React.Component {
       this.todos = JSON.parse(localStorage.getItem('todos'));
       this.count = this.todos.length;
       this.previousId = this.todos[this.count-1].id;
-      console.warn(this.previousId);
     }
 
   	if (!navigator.geolocation || !navigator.geolocation.watchPosition) {
@@ -46,25 +45,21 @@ export class Todo extends React.Component {
   }
 
   onPositionSuccess(pos) {
-  	console.warn("current latlong: " + pos.coords.latitude, pos.coords.longitude);
   	this.lat = pos.coords.latitude.toFixed(20);
   	this.long = pos.coords.longitude.toFixed(20);
   }
 
   onPositionError(error) {
-  	console.error("Oh no");
+  	console.error("Position Error");
   }
 
   addTodo(todoText) {
-  	console.warn("previous ID: " + this.previousId);
   	this.previousId++;
   	this.todos.push({id: this.previousId, text: todoText, lat: this.lat, long: this.long});
-  	console.log(this.lat);
   	localStorage.setItem('todos', JSON.stringify(this.todos));
   }
 
   removeItem(id) {
-  	console.warn("remove item " + id);
   	this.todos = this.todos.filter(
   		function(item) {
   			return item.id !== id;

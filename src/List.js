@@ -1,5 +1,4 @@
 import React from "react";
-import { observable, computed } from "mobx";
 import { observer } from "mobx-react";
 
 @observer
@@ -26,7 +25,6 @@ export class List extends React.Component {
     lon1 = degrees_to_radians(lon1);
     lon2 = degrees_to_radians(lon2);
     var distance = Math.acos(Math.sin(lat1)*Math.sin(lat2)+Math.cos(lat1)*Math.cos(lat2)*Math.cos(lon1-lon2)) * 6371000;
-    console.warn("DISTANCE IS : " + distance);
     return (distance < accuracy && distance > -accuracy);
   }
 
