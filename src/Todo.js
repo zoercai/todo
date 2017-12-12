@@ -4,9 +4,10 @@ import { observer } from "mobx-react";
 import { Form } from "./Form";
 import { List } from "./List";
 import { MapWithMarkers } from "./Map";
+import { invokeApig } from "./libs/awsLib";
 
 @observer
-export class Todo extends React.Component {
+export default class Todo extends React.Component {
 	@observable todos = [];
 	@observable previousId = 0;
 	@observable lat = 0;
@@ -53,10 +54,30 @@ export class Todo extends React.Component {
   	console.error("Position Error");
   }
 
-  addTodo(todoText) {
+  async addTodo(todoText) {
   	this.previousId++;
-  	this.todos.push({id: this.previousId, text: todoText, lat: this.lat, long: this.long});
-  	localStorage.setItem('todos', JSON.stringify(this.todos));
+  	// this.todos.push({id: this.previousId, text: todoText, lat: this.lat, long: this.long});
+  	// localStorage.setItem('todos', JSON.stringify(this.todos));
+
+    try {
+      await this.createTodo({
+        id: this.previousId + "",
+        content: todoText,
+        lat: this.lat,
+        long: this.long
+      });
+      this.props.history.push("/");
+    } catch (e) {
+      alert(e);
+    }
+  }
+
+  createTodo(todo) {
+    return invokeApig({
+      path: "/todos",
+      method: "POST",
+      body: todo
+    });
   }
 
   removeItem(id) {
