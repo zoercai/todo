@@ -31,13 +31,13 @@ export default class Todo extends React.Component {
   	this.removeItem = this.removeItem.bind(this);
   }
 
-  componentWillMount() {
-	const cachedTodos = JSON.parse(localStorage.getItem('todos'));
-    if (cachedTodos) {
-      this.todos = JSON.parse(localStorage.getItem('todos'));
-      this.count = this.todos.length;
-      this.previousId = this.todos[this.count-1].id;
-    }
+  async componentWillMount() {
+  	// const cachedTodos = JSON.parse(localStorage.getItem('todos'));
+    this.todos = await this.getTodos();    
+    this.count = this.todos.length;
+    this.previousId = parseInt(this.todos[this.count-1].todoId);
+
+    console.warn("todos retrieved" + this.todos);
 
   	if (!navigator.geolocation || !navigator.geolocation.watchPosition) {
   		throw new Error('The provided geolocation provider is invalid');
@@ -55,17 +55,19 @@ export default class Todo extends React.Component {
   }
 
   async addTodo(todoText) {
-  	this.previousId++;
-  	// this.todos.push({id: this.previousId, text: todoText, lat: this.lat, long: this.long});
+  	
   	// localStorage.setItem('todos', JSON.stringify(this.todos));
 
     try {
       await this.createTodo({
         id: this.previousId + "",
+        todoId: this.previousId + "",
         content: todoText,
         lat: this.lat,
         long: this.long
       });
+      this.previousId++;
+      this.todos.push({todoId: this.previousId, content: todoText, lat: this.lat, long: this.long});
       this.props.history.push("/");
     } catch (e) {
       alert(e);
@@ -80,12 +82,16 @@ export default class Todo extends React.Component {
     });
   }
 
+  getTodos() {
+    return invokeApig({ path: "/todos" });
+  }
+
   removeItem(id) {
   	this.todos = this.todos.filter(
   		function(item) {
-  			return item.id !== id;
+  			return item.todoId !== id;
   		});
-  	localStorage.setItem('todos', JSON.stringify(this.todos));
+  	// localStorage.setItem('todos', JSON.stringify(this.todos));
   }
 
   render() {

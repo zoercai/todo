@@ -35,9 +35,9 @@ export class List extends React.Component {
         console.info("item location: " + item.lat + " " + item.long);
         if (item.lat == null || item.long == null || this.arePointsClose(this.props.currentLat, item.lat, this.props.currentLong, item.long)) {
           return (
-            <div className="item ui checkbox" key={item.id}>
-            <input type="checkbox" name="example" onClick={() => this.removeItem(item.id)} />
-            <label>{item.text}: {item.lat}, {item.long}</label>
+            <div className="item ui checkbox" key={item.todoId}>
+            <input type="checkbox" name="example" onClick={() => this.removeItem(item.todoId)} />
+            <label>{item.content}: {item.lat}, {item.long}</label>
             </div>
             );
         }

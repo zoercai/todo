@@ -8,7 +8,7 @@ export const MapWithMarkers = withScriptjs(withGoogleMap((props) =>
   >
     {props.markers.map(marker => (
         <Marker
-          key={marker.id}
+          key={marker.todoId}
           position={{ lat: parseFloat(marker.lat), lng: parseFloat(marker.long) }}
         />
     ))}
