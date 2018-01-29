@@ -47,7 +47,7 @@ export class List extends React.Component {
           return (
             <div className="item ui checkbox" key={item.todoId}>
               <input type="checkbox" name="example" onClick={() => this.removeItem(item.todoId)} />
-              <label>{item.content}: {item.lat}, {item.long}</label>
+              <label>{item.content}</label>
             </div>
           );
         }
