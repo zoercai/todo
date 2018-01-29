@@ -5,12 +5,15 @@ import NotFound from "./containers/NotFound";
 import Login from "./containers/Login";
 import Todo from "./Todo";
 import AppliedRoute from "./components/AppliedRoute";
+import AuthenticatedRoute from "./components/AuthenticatedRoute";
+import UnauthenticatedRoute from "./components/UnauthenticatedRoute";
 
-
-export default ({ childProps }) =>
+export default () =>
   <Switch>
-    <AppliedRoute path="/" exact component={Todo} props={childProps} />
-    <AppliedRoute path="/login" exact component={Login} props={childProps} />
+    <UnauthenticatedRoute path="/" exact component={Todo} />
+    <AppliedRoute path="/login" exact component={Login} />
+    {/* <AuthenticatedRoute path="/signup" exact component={Signup} /> */}
+
     { /* Finally, catch all unmatched routes */ }
     <Route component={NotFound} />
   </Switch>;

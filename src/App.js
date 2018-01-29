@@ -1,69 +1,69 @@
 import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
+import { observer, Provider } from 'mobx-react';
 import "./App.css";
 import Routes from "./Routes";
 import RouteNavItem from "./components/RouteNavItem";
 import { authUser, signOutUser } from "./libs/awsLib";
+import Store from "./Store";
 
+const store = new Store();
+
+@observer
 class App extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      isAuthenticated: false,
-      isAuthenticating: true
-    };
   }
 
   async componentDidMount() {
     try {
       if (await authUser()) {
-        this.userHasAuthenticated(true);
+        store.userHasAuthenticated(true);
       }
     }
     catch(e) {
       alert(e);
     }
 
-    this.setState({ isAuthenticating: false });
-  }
-
-  userHasAuthenticated = authenticated => {
-    this.setState({ isAuthenticated: authenticated });
+    store.setIsAuthenticating(false);
   }
 
   handleLogout = event => {
     signOutUser();
-    this.userHasAuthenticated(false);
+    store.userHasAuthenticated(false);
     this.props.history.push("/login");
   }
 
   render() {
     const childProps = {
-      isAuthenticated: this.state.isAuthenticated,
-      userHasAuthenticated: this.userHasAuthenticated
+      isAuthenticated: store.getIsAuthenticated(),
+      userHasAuthenticated: store.getIsAuthenticated,
     };
 
     return (
-      !this.state.isAuthenticating &&
-      <div className="App container">
-        <div className="ui menu">
-        <div className="header item">
-          todo
+      <Provider store={store}>
+        <div>
+        {!store.getIsAuthenticating() &&
+        <div className="App container">
+          <div className="ui menu">
+          <div className="header item">
+            todo
+          </div>
+          {store.getIsAuthenticated()
+            ? <a className="item" onClick={this.handleLogout}>Logout</a>
+            : [
+                <RouteNavItem key={1} href="/signup">
+                  Signup
+                </RouteNavItem>,
+                <RouteNavItem key={2} href="/login">
+                  Login
+                </RouteNavItem>
+              ]}
+          </div>
+          <Routes />
+        </div>}
         </div>
-        {this.state.isAuthenticated
-          ? <a className="item" onClick={this.handleLogout}>Logout</a>
-          : [
-              <RouteNavItem key={1} href="/signup">
-                Signup
-              </RouteNavItem>,
-              <RouteNavItem key={2} href="/login">
-                Login
-              </RouteNavItem>
-            ]}
-        </div>
-        <Routes childProps={childProps} />
-      </div>
+      </Provider>
     );
   }
 }

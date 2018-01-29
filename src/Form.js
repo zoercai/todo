@@ -1,8 +1,14 @@
 import React from "react";
-import { observer } from "mobx-react";
+import { observer, inject } from 'mobx-react';
+import PropTypes from 'prop-types';
 import { Button } from 'semantic-ui-react';
 
+@inject('store') @observer
 export class Form extends React.Component {
+  static propTypes = {
+    store: PropTypes.object.isRequired,
+  }
+
   constructor(props) {
     super(props);
     
@@ -19,7 +25,7 @@ export class Form extends React.Component {
   }
 
   onClick(event) {
-    this.props.addTodo(this.state.current);
+    this.props.store.addTodo(this.state.current);
   }
 
   render() {

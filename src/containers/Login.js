@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { observer, inject } from 'mobx-react';
+import PropTypes from 'prop-types';
 import config from "../config";
 import {
   CognitoUserPool,
@@ -6,7 +8,12 @@ import {
   CognitoUser
 } from "amazon-cognito-identity-js";
 
-export default class Login extends Component {
+@inject('store') @observer
+class Login extends Component {
+  static propTypes = {
+    store: PropTypes.object.isRequired,
+  }
+
   constructor(props) {
     super(props);
 
@@ -31,7 +38,7 @@ export default class Login extends Component {
 
     try {
       await this.login(this.state.email, this.state.password);
-      this.props.userHasAuthenticated(true);
+      this.props.store.userHasAuthenticated(true);
       this.props.history.push("/");
     } catch (e) {
       alert(e);
@@ -75,3 +82,5 @@ export default class Login extends Component {
     );
   }
 }
+
+export default Login;
