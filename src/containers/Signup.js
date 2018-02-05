@@ -132,11 +132,11 @@ export default class Signup extends Component {
             <Form className="ui form" onSubmit={this.handleSubmit} loading={this.state.isLoading}>
                 <Form.Field>
                     <label>Email</label>
-                    <input id='email' type='email' placeholder='Email' onChange={this.handleChange} />
+                    <input key='id' id='email' type='email' placeholder='Email' onChange={this.handleChange} />
                 </Form.Field>
                 <Form.Field>
                     <label>Password</label>
-                    <input id='password' type='password' onChange={this.handleChange} />
+                    <input key='pass' id='password' type='password' onChange={this.handleChange} />
                 </Form.Field>
 
                 <Button className="ui submit button" type='submit' disabled={!this.validateForm()}> Signup </Button>
@@ -153,7 +153,7 @@ export default class Signup extends Component {
                 </Message>
                 <Form.Field>
                     <label> Confirmation Code </label>
-                    <input autoFocus id='confirmationCode' type='tel' placeholder='' onChange={this.handleChange} />
+                    <input key='conf' autoFocus id='confirmationCode' type='tel' placeholder='' onChange={this.handleChange} />
                 </Form.Field>
                 <Button className="ui submit button" type='verify' disabled={!this.validateConfirmationForm()}> Verify </Button>
             </Form>

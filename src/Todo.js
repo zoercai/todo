@@ -25,7 +25,7 @@ export default class Todo extends React.Component {
       throw new Error('The provided geolocation provider is invalid');
     }
     navigator.geolocation.watchPosition(
-      this.props.store.onPositionSuccess.bind(this.props.store), 
+      (pos) => this.props.store.onPositionSuccess(pos), 
       this.props.store.onPositionError.bind(this.props.store), 
       this.props.store.positionOptions);
   }
@@ -35,6 +35,11 @@ export default class Todo extends React.Component {
   }
 
   render() {
+    console.log(this.props.store.todosShowing, this.props.store.todos.length);
+
+    // getvisibletodos(;
+
+
     return (
         <div className="ui segment" id="root">
           <h1 className="ui header"> To-Do List </h1>

@@ -86,6 +86,7 @@ class Store {
 
   @action onPositionSuccess(pos) {
     console.warn("Position success");
+    console.warn(this);
   	this.lat = pos.coords.latitude.toFixed(20);
   	this.long = pos.coords.longitude.toFixed(20);
   }

@@ -53,6 +53,7 @@ export class List extends React.Component {
         }
       }.bind(this)
     );
+    this.props.store.changeTodosShowing(todosWithinRange.filter(todo => !!todo).length);
 
     return (
       <div className="ui huge celled list">
